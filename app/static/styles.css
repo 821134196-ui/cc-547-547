@@ -1,0 +1,206 @@
+/* 白、深灰与有限的工程橙：工程橙只用于待处理项与主操作 */
+:root {
+  --white: #ffffff;
+  --ink: #2b2f33;
+  --ink-soft: #5c636b;
+  --line: #e4e6e8;
+  --bg: #f5f6f7;
+  --orange: #e8772e;
+  --orange-soft: #fdeee1;
+  --green: #2e7d4f;
+  --green-soft: #e6f2ea;
+  --red: #c0392b;
+  --red-soft: #fbe9e7;
+  --mono: "SF Mono", "Cascadia Code", Consolas, "Microsoft YaHei", monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.55;
+}
+h1 { font-size: 17px; margin: 0; }
+h2 { font-size: 15px; margin: 0 0 12px; color: var(--ink); }
+small { color: var(--ink-soft); }
+
+.topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  padding: 10px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.logo { color: var(--orange); font-size: 22px; }
+.brand h1 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.actor { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.actor label { color: var(--ink-soft); }
+select, input {
+  font: inherit; padding: 6px 8px; border: 1px solid var(--line);
+  border-radius: 6px; background: var(--white); color: var(--ink);
+  min-width: 0;
+}
+.role-badge {
+  font-size: 12px; padding: 2px 8px; border-radius: 999px;
+  background: var(--bg); color: var(--ink-soft); border: 1px solid var(--line);
+}
+.role-badge.customer { background: var(--orange-soft); color: var(--orange); border-color: var(--orange); }
+.role-badge.manager { background: #eceef1; color: var(--ink); }
+
+.tabs {
+  position: sticky; top: 59px; z-index: 19;
+  display: flex; gap: 4px; padding: 8px 16px 0;
+  background: var(--bg); overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tabs button {
+  border: 1px solid var(--line); border-bottom: none;
+  background: var(--white); color: var(--ink-soft);
+  padding: 8px 14px; border-radius: 8px 8px 0 0; cursor: pointer;
+  white-space: nowrap; font-size: 14px;
+}
+.tabs button.active { color: var(--orange); border-color: var(--orange); font-weight: 600; }
+
+main { padding: 16px; max-width: 1100px; margin: 0 auto; }
+.tab { display: none; }
+.tab.active { display: block; }
+.panel {
+  background: var(--white); border: 1px solid var(--line);
+  border-radius: 10px; padding: 16px; margin-bottom: 16px;
+}
+.hint { color: var(--ink-soft); font-size: 13px; margin: 8px 0 0; }
+
+/* 结算卡片：金额整行可见 */
+.cards {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.card {
+  background: var(--white); border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px 16px; min-width: 0;
+}
+.card .label { font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
+.card .value {
+  font-family: var(--mono); font-size: 20px; font-weight: 700;
+  white-space: nowrap; overflow: visible; letter-spacing: -.2px;
+}
+.card.paid .value { color: var(--ink); }
+.card.tail .value { color: var(--green); }
+.card.pending .value { color: var(--orange); }
+.card.retention .value { color: var(--ink); }
+.card .sub { font-size: 12px; color: var(--ink-soft); margin-top: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.balance {
+  font-family: var(--mono); font-size: 14px; line-height: 2.1;
+  background: var(--bg); border-radius: 8px; padding: 10px 14px;
+  overflow-x: auto; white-space: nowrap;
+}
+.balance b { color: var(--orange); }
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--ink-soft); font-weight: 600; font-size: 12.5px; }
+td.num, th.num { text-align: right; font-family: var(--mono); white-space: nowrap; }
+.table-wrap { overflow-x: auto; }
+tr.total td { font-weight: 700; border-top: 2px solid var(--ink); }
+
+/* 整改项 */
+.rect { border: 1px solid var(--line); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+.rect-head {
+  width: 100%; display: flex; align-items: center; gap: 10px;
+  background: var(--white); border: none; padding: 12px 14px;
+  cursor: pointer; text-align: left; font: inherit; color: var(--ink);
+}
+.rect-head:hover { background: var(--bg); }
+.rect-title { flex: 1; min-width: 0; }
+.rect-title strong { display: block; }
+.rect-title small { display: block; overflow: hidden; text-overflow: ellipsis; }
+.rect-amount { font-family: var(--mono); font-weight: 700; white-space: nowrap; }
+.chev { color: var(--ink-soft); transition: transform .15s; }
+.rect.open .chev { transform: rotate(90deg); }
+.rect-body { display: none; padding: 0 14px 14px; border-top: 1px solid var(--line); }
+.rect.open .rect-body { display: block; }
+.rect-body .meta { font-size: 13px; color: var(--ink-soft); margin: 10px 0; }
+.photos { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+.photos figure { margin: 0; width: 150px; }
+.photos img {
+  width: 150px; height: 112px; object-fit: cover;
+  border: 1px solid var(--line); border-radius: 8px; display: block;
+}
+.photos figcaption { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+.tag {
+  display: inline-block; font-size: 12px; padding: 2px 9px;
+  border-radius: 999px; border: 1px solid var(--line); color: var(--ink-soft);
+  white-space: nowrap;
+}
+.tag.passed { background: var(--green-soft); color: var(--green); border-color: var(--green); }
+.tag.submitted, .tag.open, .tag.rework, .tag.initiated {
+  background: var(--orange-soft); color: var(--orange); border-color: var(--orange);
+}
+.tag.paid { background: var(--green-soft); color: var(--green); border-color: var(--green); }
+.tag.blocked { background: var(--red-soft); color: var(--red); border-color: var(--red); }
+
+.child-issue {
+  border-left: 3px solid var(--orange); background: var(--orange-soft);
+  padding: 8px 12px; border-radius: 0 8px 8px 0; margin: 8px 0; font-size: 13.5px;
+}
+.btn {
+  border: 1px solid var(--line); background: var(--white); color: var(--ink);
+  padding: 7px 14px; border-radius: 7px; cursor: pointer; font-size: 14px;
+}
+.btn:hover { border-color: var(--ink-soft); }
+.btn.primary { background: var(--orange); border-color: var(--orange); color: #fff; }
+.btn.primary:disabled, .btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.small { padding: 4px 10px; font-size: 12.5px; }
+.actions { display: flex; align-items: center; gap: 12px; margin: 12px 0; flex-wrap: wrap; }
+.check { font-size: 13.5px; color: var(--ink-soft); display: flex; align-items: center; gap: 6px; }
+.form-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.form-row input { flex: 1 1 140px; }
+.payable-item {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 8px; margin-bottom: 8px;
+}
+.payable-item label { flex: 1; }
+.payable-item .amt { font-family: var(--mono); font-weight: 700; white-space: nowrap; }
+.result-ok { background: var(--green-soft); color: var(--green); padding: 10px 12px;
+  border-radius: 8px; font-size: 13.5px; margin-top: 10px; overflow-x: auto; }
+.result-err { background: var(--red-soft); color: var(--red); padding: 10px 12px;
+  border-radius: 8px; font-size: 13.5px; margin-top: 10px; }
+.log {
+  background: #2b2f33; color: #d8dee4; border-radius: 8px;
+  padding: 12px; font-size: 12px; line-height: 1.6;
+  max-height: 360px; overflow: auto; white-space: pre-wrap; word-break: break-all;
+}
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: #fff; padding: 10px 18px; border-radius: 8px;
+  font-size: 14px; opacity: 0; pointer-events: none; transition: .2s; z-index: 50;
+  max-width: 90vw;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.err { background: var(--red); }
+
+/* 手机端：金额整行可见是硬性要求，不允许金额被挤压换行 */
+@media (max-width: 720px) {
+  main { padding: 10px; }
+  .topbar { padding: 10px 12px; }
+  .tabs { top: 64px; padding: 8px 10px 0; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .card { padding: 10px 12px; }
+  .card .value { font-size: 17px; }
+  .rect-head { padding: 10px 12px; }
+  .photos figure, .photos img { width: 132px; }
+  .photos img { height: 99px; }
+  .payable-item { flex-wrap: wrap; }
+  .payable-item .amt { width: 100%; font-size: 15px; }
+  td, th { padding: 7px 8px; }
+}
+@media (max-width: 380px) {
+  .cards { grid-template-columns: 1fr; }
+  .card .value { font-size: 19px; }
+}

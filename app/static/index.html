@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>装修工程结算</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">◆</span>
+    <div>
+      <h1 id="project-name">装修工程结算</h1>
+      <small id="project-meta"></small>
+    </div>
+  </div>
+  <div class="actor">
+    <label for="actor-select">当前操作人</label>
+    <select id="actor-select"></select>
+    <span id="actor-role" class="role-badge"></span>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="settle" class="active">工程结算</button>
+  <button data-tab="rects">整改清单 / 验收签认</button>
+  <button data-tab="tail">尾款申请</button>
+  <button data-tab="warranty">质保金到期</button>
+  <button data-tab="records">争议与依据</button>
+</nav>
+
+<main>
+  <!-- 结算 -->
+  <section id="tab-settle" class="tab active">
+    <div class="cards" id="settle-cards"></div>
+    <div class="panel">
+      <h2>金额守恒核对</h2>
+      <div id="balance-row" class="balance"></div>
+      <p class="hint">已付（含在途回执）＋可付尾款＋待处理整改尾款＋尾差＋质保金留存 ＝ 合同金额（含调整）。
+        未验收整改项不计入可付金额；质保金不会随尾款释放。</p>
+    </div>
+    <div class="panel">
+      <h2>付款指令</h2>
+      <div class="table-wrap">
+        <table id="payments-table"></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 整改清单 -->
+  <section id="tab-rects" class="tab">
+    <div class="panel">
+      <h2>整改项（逐条展开照片与签认时间）</h2>
+      <div id="rect-list"></div>
+    </div>
+  </section>
+
+  <!-- 尾款 -->
+  <section id="tab-tail" class="tab">
+    <div class="panel">
+      <h2>尾款申请</h2>
+      <p class="hint">仅客户可发起；仅“已签认且无未结新问题”的整改项可勾选。未验收项不会出现在下方。</p>
+      <div id="tail-payable"></div>
+      <div class="actions">
+        <label class="check"><input type="checkbox" id="delay-receipt"> 模拟回执延迟</label>
+        <button class="btn primary" id="btn-release-tail">申请放款（一笔付款指令）</button>
+      </div>
+      <div id="tail-result"></div>
+    </div>
+    <div class="panel">
+      <h2>付款回执</h2>
+      <div class="table-wrap">
+        <table id="receipt-table"></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 质保金 -->
+  <section id="tab-warranty" class="tab">
+    <div class="panel">
+      <h2>质保金</h2>
+      <div id="retention-box"></div>
+    </div>
+    <div class="panel">
+      <h2>质保期内返修</h2>
+      <div id="repair-list"></div>
+      <div class="form-row" id="repair-form">
+        <input id="repair-title" placeholder="报修问题（客户登记）">
+        <input id="repair-basis" placeholder="依据（报修时间/照片存档说明）">
+        <button class="btn" id="btn-repair-open">客户登记返修</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 争议与依据 -->
+  <section id="tab-records" class="tab">
+    <div class="panel">
+      <h2>争议记录</h2>
+      <div id="dispute-list"></div>
+      <div class="form-row">
+        <input id="dispute-subject" placeholder="争议主题">
+        <input id="dispute-basis" placeholder="依据（合同条款/记录）">
+        <button class="btn" id="btn-dispute-add">登记争议</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>合同价调整依据</h2>
+      <div class="table-wrap"><table id="adjust-table"></table></div>
+      <div class="form-row">
+        <input id="adj-delta" placeholder="调整金额（元，增项为正）">
+        <input id="adj-reason" placeholder="原因">
+        <input id="adj-basis" placeholder="依据（签证单等）">
+        <button class="btn" id="btn-adj-add">登记调整</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>项目经理更换记录</h2>
+      <div id="mgr-history"></div>
+    </div>
+    <div class="panel">
+      <h2>工程完成量（仅项目经理录入）</h2>
+      <div class="table-wrap"><table id="completion-table"></table></div>
+      <div class="form-row">
+        <input id="wc-item" placeholder="项目名称">
+        <input id="wc-qty" placeholder="数量" inputmode="decimal">
+        <input id="wc-unit" placeholder="单位">
+        <button class="btn" id="btn-wc-add">项目经理录入</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>版本流水（只增不改）</h2>
+      <pre id="event-log" class="log"></pre>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
